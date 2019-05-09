@@ -241,6 +241,17 @@ RUN set -eux; \
 	gosu rabbitmq rabbitmq-plugins list; \
 # no stale cookies
 	rm "$RABBITMQ_DATA_DIR/.erlang.cookie"
+# install tools
+RUN set -eux; \
+	\
+	apt-get update; \
+	apt-get install --yes --no-install-recommends \
+		curl \
+		python \
+		dnsutils \
+		amqp-tools \
+	; \
+	rm -rf /var/lib/apt/lists/*; 
 
 # Added for backwards compatibility - users can simply COPY custom plugins to /plugins
 RUN ln -sf /opt/rabbitmq/plugins /plugins
